@@ -1,3 +1,5 @@
+const { every } = require("cypress/types/lodash");
+
 // Iteration #1: Find the maximum
 function maxOfTwoNumbers(num1, num2) {
   if (num1 >= num2) {
@@ -58,7 +60,23 @@ function sumNumbers(num) {
 
 
 // Iteration #3.1 Bonus:
-function sum() { }
+const mixedArr = [6, 12, 'miami', 1, true, 'barca', '200', 'lisboa', 8, 10];
+let sumOfElements = 0;
+function sum(mixedArr) {
+  if (mixedArr.length === 0) {
+    return 0;
+  }
+  else if (mixedArr.length === 1 && typeof mixedArr[0] === 'number') {
+    return mixedArr[0];
+  }
+  else if (mixedArr.forEach(function (ele, index) {
+    if (typeof mixedArr[index] === 'number') {
+      sumOfElements += mixedArr[index];
+    }
+
+  }));
+  return sumOfElements;
+}
 
 
 
@@ -107,7 +125,41 @@ function averageWordLength(stringArr) {
 }
 
 // Bonus - Iteration #4.1
-function avg() { }
+const mixedArray = [1, "hello", true, 3.5, false, "world"];
+function avg(mixedArray) {
+  let total = 0;
+  let count = 0;
+  if (mixedArray.length === 0) {
+    return null;
+  }
+  mixedArray.forEach(function (value) {
+
+    if (typeof value === 'number') {
+      total += value;
+      count += 1;
+    }
+    else if (typeof value === "string") {
+      total += value.length;
+      count += 1;
+    }
+    else if (typeof value === "boolean") {
+      if (value === true) {
+        total += 1;
+      }
+      else {
+        total += 0;
+      }
+      count += 1;
+    }
+
+  })
+  if (count === 0) {
+    return 0;
+  }
+  return total / count;
+
+}
+
 
 // Iteration #5: Unique arrays
 const wordsUnique = [
@@ -125,24 +177,64 @@ const wordsUnique = [
 ];
 
 function uniquifyArray(unqWords) {
+
+  let wordsArray = [];
   if (unqWords.length === 0) {
     return null;
   }
-  else if (unqWords.forEach(function (ele, index) {
-    if (unqWords[index] === unqWords[index + 1]) {
-      unqWords = unqWords[index];
+  let hasRepeats = false;
+  for (let i = 0; i < unqWords.length - 1; i++) {
+    for (let j = i + 1; j < unqWords.length; j++) {
+      if (unqWords[i] === unqWords[j]) {
+        hasRepeats = true;
+        break;
+      }
     }
-  })) {
+    if (hasRepeats) {
+      break;
+    }
+  }
+  if (hasRepeats) {
 
+    for (let i = 0; i < unqWords.length; i++) {
+      if (wordsArray.indexOf(unqWords[i]) === -1) {
+        wordsArray.push(unqWords[i]);
+      }
+    }
+    return wordsArray;
+  } else {
+    // If no repeats, return the original array
+    return unqWords;
   }
 }
+
+
 
 
 
 // Iteration #6: Find elements
 const wordsFind = ['machine', 'subset', 'trouble', 'starting', 'matter', 'eating', 'truth', 'disobedience'];
 
-function doesWordExist() { }
+function doesWordExist(wordsFind, word) {
+  let wordExist = true;
+  if (wordsFind.length === 0) {
+    return null;
+  }
+  else if (wordsFind.length === 1 && wordsFind[0] === word) {
+    return true;
+  }
+  else {
+    for (let i = 0; i < wordsFind.length; i++) {
+      if (wordsFind[i] === word) {
+
+        return true;
+      }
+    }
+    return false;
+
+
+  }
+}
 
 
 
@@ -161,10 +253,18 @@ const wordsCount = [
   'matter'
 ];
 
-function howManyTimes(wordsCount) {
-
+function howManyTimes(wordsCount, word) {
+  let count = 0;
   if (wordsCount.length === 0) {
-    return null;
+    return 0;
+  }
+  else {
+    wordsCount.forEach(function (wordArr, index) {
+      if (wordsCount[index] === word) {
+        count += 1;
+      }
+    })
+    return count;
   }
 }
 
